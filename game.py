@@ -8,6 +8,7 @@ class Game:
         self.player = User()
         self.computer_symbol = None
         self.computer = None
+        self.scoreboard = ScoreBoard()
 
     def display_board(self):
         print("-------------------")
@@ -47,22 +48,27 @@ class Game:
             if player_turn:
                 self.player.user_turn(self.board)
                 if self.check_winner():
+                    self.scoreboard.update_user_score()
                     break
                 else:
                     self.computer.computer_turn(self.board)
                     self.display_board()
                     if self.check_winner():
+                        self.scoreboard.update_comp_score()
                         break
             else:
                 self.computer.computer_turn(self.board)
                 self.display_board()
                 if self.check_winner():
+                    self.scoreboard.update_comp_score()
                     break
                 self.player.user_turn(self.board)
                 if self.check_winner():
+                    self.scoreboard.update_user_score()
                     break
 
         while True:
+            self.scoreboard.display_scores()
             play_again = input("Would you like to play again? (y/n) ").strip().upper()
             if play_again == "Y":
                 self.restart_game()
@@ -129,3 +135,20 @@ class Computer:
             if board[place_index] == '_':
                 board[place_index] = self.comp_symbol
                 break
+
+
+class ScoreBoard:
+
+    def __init__(self):
+        self.user_score = 0
+        self.comp_score = 0
+
+    def update_user_score(self):
+        self.user_score += 1
+
+    def update_comp_score(self):
+        self.comp_score += 1
+
+    def display_scores(self):
+        print("Scoreboard:")
+        print(f"User: {self.user_score}  Computer: {self.comp_score}")
