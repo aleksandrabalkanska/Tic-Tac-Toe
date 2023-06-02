@@ -1,4 +1,9 @@
 from random import randint
+import os
+
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 
 class Game:
@@ -81,10 +86,10 @@ class Game:
                 print("Invalid input. Please enter 'Y' or 'N'.")
 
     def restart_game(self):
+        cls()
         self.board = ["_" for _ in range(0, 9)]
         self.player.user_choice = None
         self.computer_symbol = None
-        self.display_board()
         self.start()
 
 
