@@ -68,6 +68,7 @@ class Game:
                     break
 
         while True:
+            self.scoreboard.update_high_score()
             self.scoreboard.display_scores()
             play_again = input("Would you like to play again? (y/n) ").strip().upper()
             if play_again == "Y":
@@ -94,7 +95,7 @@ class User:
 
     def symbol_choice(self):
         while True:
-            self.user_choice = input("Would you like to be the X or the O?: ").upper()
+            self.user_choice = input("Would you like to be the X or the O?: ").strip().upper()
             if self.user_choice not in self.valid_choice:
                 print("Please input only 'X' or 'O'!")
                 continue
@@ -142,6 +143,7 @@ class ScoreBoard:
     def __init__(self):
         self.user_score = 0
         self.comp_score = 0
+        self.high_score = 0
 
     def update_user_score(self):
         self.user_score += 1
@@ -149,6 +151,13 @@ class ScoreBoard:
     def update_comp_score(self):
         self.comp_score += 1
 
+    def update_high_score(self):
+        if self.user_score > self.high_score:
+            self.high_score = self.user_score
+            with open('high_score.txt', 'w') as file:
+                file.write(str(self.high_score))
+
     def display_scores(self):
         print("Scoreboard:")
         print(f"User: {self.user_score}  Computer: {self.comp_score}")
+        print(f"User High Score: {self.high_score}")
