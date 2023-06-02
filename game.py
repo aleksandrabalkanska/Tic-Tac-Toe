@@ -115,6 +115,8 @@ class User:
                     if board[place_index] == '_':
                         board[place_index] = self.user_choice
                         break
+                    else:
+                        print("Invalid input. That position is taken.")
                 else:
                     print("Invalid input. Please provide valid column and row numbers.")
                     continue
