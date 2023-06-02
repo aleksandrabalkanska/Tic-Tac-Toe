@@ -150,7 +150,8 @@ class ScoreBoard:
     def __init__(self):
         self.user_score = 0
         self.comp_score = 0
-        self.high_score = 0
+        with open('high_score.txt', 'r') as file:
+            self.high_score = int(file.read()[0])
 
     def update_user_score(self):
         self.user_score += 1
